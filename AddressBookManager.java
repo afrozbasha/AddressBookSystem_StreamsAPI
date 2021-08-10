@@ -11,8 +11,7 @@ public class AddressBookManager {
 
     Scanner sc = new Scanner(System.in);
 
-
-    public void callAddressBookBluePrint(){
+    public void callAddressBookBluePrint() {
 
         //Enter the Book name before detailed Entries
         System.out.println("Enter Address Book Name");
@@ -40,24 +39,56 @@ public class AddressBookManager {
         String Email = sc.nextLine();
 
         //Checking name of the person to avoid duplicate Entries
-        if (check(FirstName)){
+        if (check(FirstName)) {
             callAddressBookTemp(BookName, FirstName, LastName, Address, City, Zip, State, PhoneNumber, Email);
             System.out.println("AddressBookBluePrint{" + "firstName='" + FirstName + '\'' + ", lastName='" + LastName + '\'' + ", address='" + Address + '\'' + ", city='" + City + '\'' + ", state='" + State + '\'' + ", eMail='" + Email + '\'' + ", zip=" + Zip + ", mobileNum=" + PhoneNumber + '}');
-        }
-        else
-            System.out.println("The "+FirstName+" already exist in contacts please use different name");
+        } else
+            System.out.println("The " + FirstName + " already exist in contacts please use different name");
     }
 
     //Checking duplicate Entries
-    private boolean check(String firstName){
+    private boolean check(String firstName) {
         Boolean check = true;
-        if (detailedEntries.stream().anyMatch(person -> person.getFirstName().equals(firstName))){
+        if (detailedEntries.stream().anyMatch(person -> person.getFirstName().equals(firstName))) {
             check = false;
             return check;
-        }else {
+        } else {
             return check;
         }
     }
+
+    //Checking person in city
+    public void viewPersonByCity() {
+        System.out.println("Enter city");
+        String location = sc.next();
+        Boolean ch = false;
+        try {
+            ch = cityList.entrySet().stream().anyMatch(p -> p.getKey().equals(location));
+            if (ch == true)
+                cityList.entrySet().stream().filter(p -> p.getKey().equals(location)).forEach(System.out::println);
+            else
+                System.out.println("no records found");
+        } catch (Exception e) {
+            System.out.println("No persons in city");
+        }
+    }
+
+    //Checking person in state
+    public void viewPersonByState() {
+        System.out.println("Enter State");
+        String State = sc.next();
+        Boolean ch = false;
+        try {
+            ch = stateList.entrySet().stream().anyMatch(p -> p.getKey().equals(State));
+            if (ch == true)
+                stateList.entrySet().stream().filter(p -> p.getKey().equals(State)).forEach(System.out::println);
+            else
+                System.out.println("no records found");
+        } catch (Exception e) {
+            System.out.println("No persons in state");
+        }
+    }
+
 
     private void callAddressBookTemp(String bookName,
                                      String firstName, String lastName,
@@ -72,19 +103,19 @@ public class AddressBookManager {
         stateList.put(state, detailedEntries);
     }
 
-    public void editContact(){
+    public void editContact() {
         System.out.println("enter your book name");
         String bookName = sc.next();
         ArrayList<AddressBookBluePrint> tempContact = multiBook.get(bookName);
         System.out.println("enter your name");
         String name = sc.next();
-        for (AddressBookBluePrint eachDetails : tempContact){
-            if (eachDetails.getFirstName().equals(name)){
+        for (AddressBookBluePrint eachDetails : tempContact) {
+            if (eachDetails.getFirstName().equals(name)) {
                 boolean conditon = true;
-                while (conditon){
+                while (conditon) {
                     System.out.println("enter number  1:first_name 2:last_name 3:address 4:City 5:zip 6:state 7:phone_number 8:email 0:quit");
                     int opt = sc.nextInt();
-                    switch (opt){
+                    switch (opt) {
                         case 1:
                             System.out.println("Enter you first name");
                             String firstname = sc.next();
@@ -144,26 +175,39 @@ public class AddressBookManager {
             }
         }
     }
-
-    public boolean takeOption(){
-        System.out.println("enter 1:add_contact 2:edit_contact or 0 to quit");
+    public boolean takeOption() {
+        System.out.println("enter 1:addContact 2:editContact 3:viewPersonByCity 4:viewPersonByState or 0 to quit");
         int opt = sc.nextInt();
         boolean conditon = true;
-        switch (opt){
-            case 1:
-                callAddressBookBluePrint();
-                break;
-            case 2:
-                editContact();
-                break;
-            case 0:
-                conditon = false;
-                break;
-            default:
-                System.out.println("invalid input");
+        while (conditon) {
+            switch (opt) {
+                case 1:
+                    callAddressBookBluePrint();
+                    break;
+                case 2:
+                    editContact();
+                    break;
+                case 3:
+                    viewPersonByCity();
+                    break;
+                case 4:
+                    viewPersonByState();
+                    break;
+                case 0:
+                    conditon = false;
+                    break;
+                default:
+                    System.out.println("invalid input");
+            }
+
         }
         return conditon;
     }
 
 
 }
+
+
+
+
+
