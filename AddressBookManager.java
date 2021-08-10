@@ -113,6 +113,7 @@ public class AddressBookManager {
 
         }
     }
+    //Counting persons as per city's and states
     public void countPersonsByCityOrState(){
         System.out.println("Enter 1:city 2:state");
         int opt = sc.nextInt();
@@ -132,6 +133,12 @@ public class AddressBookManager {
         }
     }
 
+    //sort as per person first name alphabetically
+    public void sortAlphabetically(){
+        book.entrySet().stream().sorted(Map.Entry.comparingByKey()).forEach(System.out::println);
+    }
+
+    //here is adding all the all collections
     private void callAddressBookTemp(String bookName,
                                      String firstName, String lastName,
                                      String address, String city, int zip,
@@ -145,6 +152,7 @@ public class AddressBookManager {
         stateList.put(state, detailedEntries);
     }
 
+    //edit contact as per parameter
     public void editContact() {
         System.out.println("enter your book name");
         String bookName = sc.next();
@@ -220,7 +228,8 @@ public class AddressBookManager {
     public boolean takeOption() {
         boolean conditon = true;
         while (conditon) {
-            System.out.println("enter 1:addContact 2:editContact 3:viewPersonByCity 4:viewPersonByState 5:viewPersonsByCityOrState 6:countPersonsByCityOrState or 0 to quit");
+            System.out.println("enter 1:addContact 2:editContact 3:viewPersonByCity 4:viewPersonByState 5:viewPersonsByCityOrState " +
+                    "6:countPersonsByCityOrState 7:sortAlphabetically or 0 to quit");
             int opt = sc.nextInt();
             switch (opt) {
                 case 1:
@@ -240,6 +249,8 @@ public class AddressBookManager {
                     break;
                 case 6:
                     countPersonsByCityOrState();
+                case 7:
+                    sortAlphabetically();
                 case 0:
                     conditon = false;
                     break;
