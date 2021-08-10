@@ -60,8 +60,7 @@ public class AddressBookManager {
 
     //Checking person in city
     public void viewPersonByCity() {
-//        System.out.println(cityList);
-//        System.out.println(stateList);
+
         System.out.println("Enter city");
         String location = sc.next();
         Boolean ch = false;
@@ -113,7 +112,24 @@ public class AddressBookManager {
                 break;
 
         }
-
+    }
+    public void countPersonsByCityOrState(){
+        System.out.println("Enter 1:city 2:state");
+        int opt = sc.nextInt();
+        switch (opt){
+            case 1:
+                System.out.println("Enter city name");
+                String location = sc.next();
+                Long count = cityList.entrySet().stream().filter(p->p.getKey().equals(location)).collect(Collectors.counting());
+                System.out.println(location+" Persons : "+count);
+                break;
+            case 2:
+                System.out.println("Enter state name");
+                String state = sc.next();
+                Long count1 = cityList.entrySet().stream().filter(p->p.getKey().equals(state)).collect(Collectors.counting());
+                System.out.println(state+" Persons : "+count1);
+                break;
+        }
     }
 
     private void callAddressBookTemp(String bookName,
@@ -204,7 +220,7 @@ public class AddressBookManager {
     public boolean takeOption() {
         boolean conditon = true;
         while (conditon) {
-            System.out.println("enter 1:addContact 2:editContact 3:viewPersonByCity 4:viewPersonByState 5:viewPersonsByCityOrState or 0 to quit");
+            System.out.println("enter 1:addContact 2:editContact 3:viewPersonByCity 4:viewPersonByState 5:viewPersonsByCityOrState 6:countPersonsByCityOrState or 0 to quit");
             int opt = sc.nextInt();
             switch (opt) {
                 case 1:
@@ -222,13 +238,14 @@ public class AddressBookManager {
                 case 5:
                     viewPersonsByCityOrState();
                     break;
+                case 6:
+                    countPersonsByCityOrState();
                 case 0:
                     conditon = false;
                     break;
                 default:
                     System.out.println("invalid input");
             }
-
         }
         return conditon;
     }
